@@ -7,8 +7,13 @@
         <option value="$PROJECT_DIR$/todo/pom.xml" />
       </list>
     </option>
+    <option name="ignoredPathMasks">
+      <list>
+        <option value="C:\Users\ryang\OneDrive\Documentos\GitHub\todo\*" />
+      </list>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
