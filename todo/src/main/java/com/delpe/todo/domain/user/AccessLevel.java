@@ -13,14 +13,4 @@ public enum AccessLevel {
     AccessLevel(String displayName) {
         this.displayName = displayName;
     }
-
-    public static AccessLevel fromString(String accessLevel) {
-        for (AccessLevel level : AccessLevel.values()) {
-            if (level.name().equalsIgnoreCase(accessLevel)) {
-                return level;
-            }
-        }
-        return null;
-    }
-
 }

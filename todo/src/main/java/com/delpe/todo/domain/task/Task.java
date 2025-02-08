@@ -1,4 +1,4 @@
-package com.delpe.todo.domain.todo;
+package com.delpe.todo.domain.task;
 
 import com.delpe.todo.domain.auditable.Auditable;
 import com.delpe.todo.domain.user.User;
@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id", callSuper = false)
-public class Todo extends Auditable {
+public class Task extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
