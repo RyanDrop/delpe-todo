@@ -8,6 +8,7 @@ import com.delpe.todo.exception.UserNotFoundException;
 import com.delpe.todo.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserResponseDTO> getAllUsers() {
         Stream<UserResponseDTO> mapUserToResponseDTO = userRepository.findAll().stream().map(UserResponseDTO::new);
@@ -28,6 +30,7 @@ public class UserService {
 
     public User createUser(UserRequestDTO userRequestDTO) {
         User user = objectMapper.convertValue(userRequestDTO, User.class);
+        user.setPassword(passwordEncoder.encode(userRequestDTO.password()));
         return userRepository.save(user);
     }
 
