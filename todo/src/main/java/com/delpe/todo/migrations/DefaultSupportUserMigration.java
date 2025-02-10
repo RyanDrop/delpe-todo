@@ -26,13 +26,12 @@ public class DefaultSupportUserMigration implements CommandLineRunner {
         if (userRepository.findByEmail(email).isEmpty()) {
             System.out.print("Criando Email");
 
-            User.UserBuilder builderUser = User.builder();
-            builderUser.firstName("Default");
-            builderUser.lastName("Manager");
-            builderUser.email("manager@mail.com");
-            builderUser.password(passwordEncoder.encode("dmaloc"));
-            builderUser.accessLevel(AccessLevel.GERENTE);
-            User defaultUser = builderUser.build();
+            User defaultUser = new User();
+            defaultUser.setFirstName("Default");
+            defaultUser.setLastName("Manager");
+            defaultUser.setEmail("manager@mail.com");
+            defaultUser.setPassword(passwordEncoder.encode("dmaloc"));
+            defaultUser.setAccessLevel(AccessLevel.GERENTE);
             userRepository.save(defaultUser);
         }
     }
