@@ -48,26 +48,33 @@ public class SecurityConfig {
 
     };
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                        .requestMatchers(ENDPOINTS_GERENTE).hasRole("GERENTE")
-                        .requestMatchers(ENDPOINTS_DEV).hasRole("DEV")
-                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
-                        .anyRequest().authenticated()
-                ).addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    return httpSecurity
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(List.of("*"));
+                config.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(List.of("*"));
+                return config;
+            }))
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
+                    .requestMatchers(ENDPOINTS_GERENTE).hasRole("GERENTE")
+                    .requestMatchers(ENDPOINTS_DEV).hasRole("DEV")
+                    .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
+                    .anyRequest().authenticated()
+            ).addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsServiceConfig userDetailsServiceConfig, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsServiceConfig);
         authProvider.setPasswordEncoder(passwordEncoder);
-
         return new ProviderManager(List.of(authProvider));
     }
 
