@@ -1,6 +1,5 @@
 package com.delpe.todo.config.auth;
 
-import com.delpe.todo.config.SecurityConfig;
 import com.delpe.todo.config.userDetails.UserDetailsConfig;
 import com.delpe.todo.domain.user.User;
 import com.delpe.todo.repositories.UserRepository;
@@ -18,6 +17,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import static com.delpe.todo.config.SecurityConfig.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED;
 
 @RequiredArgsConstructor
 @Component
@@ -60,7 +61,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        return !Arrays.asList(SecurityConfig.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).contains(requestURI);
+        return !Arrays.asList(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).contains(requestURI);
     }
 
 }

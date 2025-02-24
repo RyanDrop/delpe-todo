@@ -20,7 +20,7 @@ public class UserDetailsConfig implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getAccessLevel().name());
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_".concat(user.getAccessLevel().name()));
         return Collections.singletonList(authority);
     }
 
@@ -33,6 +33,10 @@ public class UserDetailsConfig implements UserDetails {
     public String getUsername() {
         return user.getEmail();
     } // Retorna o nome de usuário do usuário que criamos anteriormente
+
+    public String getAccessLevel() {
+        return user.getAccessLevel().getDisplayName();
+    }
 
     @Override
     public boolean isAccountNonExpired() {

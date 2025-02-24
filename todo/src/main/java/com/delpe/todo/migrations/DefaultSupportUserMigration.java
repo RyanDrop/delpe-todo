@@ -22,10 +22,7 @@ public class DefaultSupportUserMigration implements CommandLineRunner {
     @Override
     public void run(String... args) {
         String email = "manager@mail.com";
-        System.out.print("Passou");
         if (userRepository.findByEmail(email).isEmpty()) {
-            System.out.print("Criando Email");
-
             User defaultUser = new User();
             defaultUser.setFirstName("Default");
             defaultUser.setLastName("Manager");

@@ -30,8 +30,7 @@ public class UserController {
     @GetMapping("/access-level/{accessLevel}")
     public ResponseEntity<List<UserResponseDTO>> getUsersByAccessLevel(@PathVariable AccessLevel accessLevel) {
         List<UserResponseDTO> users = userService.getUsersByAccessLevel(accessLevel);
-        ResponseEntity<List<UserResponseDTO>> response = users.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(users);
-        return response;
+        return users.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
