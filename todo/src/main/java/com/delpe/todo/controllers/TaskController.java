@@ -47,6 +47,13 @@ public class TaskController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_GERENTE')")
+    @PatchMapping("/{id}/description")
+    public ResponseEntity<TaskResponseDTO> patchDescription(@PathVariable Long id, @Valid @RequestBody TaskRequestDTO taskRequestDTO) {
+        Task updatedTask = taskService.patchDescription(id, taskRequestDTO);
+        return ResponseEntity.ok(new TaskResponseDTO(updatedTask));
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_GERENTE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);

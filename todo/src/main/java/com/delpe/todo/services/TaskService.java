@@ -7,6 +7,7 @@ import com.delpe.todo.dtos.task.TaskRequestDTO;
 import com.delpe.todo.dtos.task.TaskResponseDTO;
 import com.delpe.todo.repositories.TaskRepository;
 import com.delpe.todo.repositories.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,12 @@ public class TaskService {
     public Task patchDone(Long id) {
         Task task = getTaskById(id);
         task.setDone(!task.getDone());
+        return taskRepository.save(task);
+    }
+
+    public Task patchDescription(Long id, @Valid TaskRequestDTO taskRequestDTO) {
+        Task task = getTaskById(id);
+        task.setDescription(taskRequestDTO.description());
         return taskRepository.save(task);
     }
 
